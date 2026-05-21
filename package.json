@@ -1,0 +1,33 @@
+{
+    "name": "kolo-pocket-db",
+    "version": "1.0.0",
+    "description": "to create a contribution webpage",
+    "repository": {
+        "type": "git",
+        "url": "kolo pocket"
+    },
+    "license": "ISC",
+    "author": "David",
+    "type": "commonjs",
+    "main": "main.js",
+        "scripts": {
+            "test": "npm run dev",
+            "dev": "nodemon src/main.js",
+            "start": "node src/main.js"
+        },
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "express-validator": "^7.3.2",
+        "jsonwebtoken": "^9.0.3",
+        "mongoose": "^9.6.2",
+        "nodemailer": "^8.0.7",
+        "transporter": "^0.0.1",
+        "validator": "^13.15.35"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.14"
+    }
+}
