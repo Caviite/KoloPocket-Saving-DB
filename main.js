@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const authpageRoute = require('./src/routes/authpage');
 
-app.use(cors({origin: 'http://kolopocket.vercel.app' }));
+app.use(cors({origin: 'https://kolopocket.vercel.app' }));
 app.use(express.json());
 app.use("/auth", authpageRoute);
 
