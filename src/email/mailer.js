@@ -2,8 +2,11 @@ const nodemailer = require('nodemailer');
 const env = require('../config/env.js');
 
 let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // true for 465, false for other ports
     service: 'gmail',
-    auth: { 
+    auth: {
         user: env.APP_EMAIL,
         pass: env.APP_PASSWORD
     }
@@ -11,7 +14,7 @@ let transporter = nodemailer.createTransport({
 
 const mailOption = (email, subject, html) => {
     return {
-        from: env.app_email,
+        from: env.APP_EMAIL,
         to: email,
         subject: subject,
         html: html
@@ -21,7 +24,7 @@ const mailOption = (email, subject, html) => {
 const sendMail = (email, name) => {
     const option = mailOption(
         email,
-         'Welcome to KoloPocket — Your Journey Starts Here! 🎉', 
+        'Welcome to KoloPocket — Your Journey Starts Here! 🎉',
         `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h1 style="color: #1a1a1a;">Welcome to KoloPocket! 🎉</h1>
         
