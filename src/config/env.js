@@ -7,7 +7,9 @@ const env = {
   JWT_SECRET: process.env.JWT_SECRET,
   EXPIRE_IN: process.env.EXPIRE_IN,
   APP_PASSWORD: process.env.APP_PASSWORD,
-  APP_EMAIL: process.env.APP_EMAIL
+  APP_EMAIL: process.env.APP_EMAIL,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
+
 }
 
 module.exports = env;
