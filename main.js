@@ -32,16 +32,20 @@ app.get('/', (req, res) => {
   res.json('Welcome to kolo pocket where contribution saves lives!');
 });
 
+const PORT = process.env.PORT || 4000;
+
 connectDB().then(() => {
 
   // 🚀 START THE BACKGROUND CRON ALARM RUNNER HERE:
   startCronJobs();
   console.log('🤖 Background Automation Scheduler is alive and listening!');
 
-  app.listen(4000, () => {
-    console.log('🚀 Server is running smoothly on port 4000');
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running smoothly on port ${PORT}`);
   });
+}).catch((err) => {
+  console.error('❌ Failed to connect to DB, server not started:', err);
+  process.exit(1);
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
