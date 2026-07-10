@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const env = require("../Config/env");
+const env = require("../config/env");
 
 const authenticate = async (req, res, next) => {
   console.log("🔐 Authenticate middleware called");
