@@ -136,7 +136,7 @@ receiptSchema.pre('save', async function() {
 receiptSchema.methods.formatForDisplay = function() {
   return {
     receiptNumber: this.receiptNumber,
-    contributorAmount: `₦${this.contributionAmount.toLocaleString('en-NG')}`,
+    contributorAmount: `₦${this.contributionAmount.toLocaleString('en-NG')}`, 
     commissionEarned: `₦${this.commissionAmount.toLocaleString('en-NG')}`,
     payoutAmount: `₦${this.amountForPayout.toLocaleString('en-NG')}`,
     cycle: this.cycle,

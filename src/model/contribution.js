@@ -15,7 +15,6 @@ const contributionSchema = new mongoose.Schema(
     },
     contributorId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'AuthPage',
       required: true,
       index: true
     },

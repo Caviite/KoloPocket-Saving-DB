@@ -65,6 +65,8 @@ const googleAuth = async (req, res) => {
             { expiresIn: process.env.EXPIRE_IN }
         );
 
+        console.log("Generated JWT token:", token);
+
         res.status(200).json({
             success: true,
             token,
@@ -138,6 +140,8 @@ const logIn = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: process.env.EXPIRE_IN }
         );
+
+        console.log("Generated JWT token:", token);
 
         const users = {
             id: user._id,

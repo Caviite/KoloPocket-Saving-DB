@@ -62,6 +62,29 @@ const startCronJobs = () => {
             console.error('❌ Error running weekly cron job:', error);
         }
     });
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // TASK 3: RUNS ON THE 1ST OF EVERY MONTH AT MIDNIGHT (00:00)
+    // Increments month counter for active monthly groups
+    // ─────────────────────────────────────────────────────────────────────────
+    cron.schedule('0 0 1 * *', async () => {
+        console.log('⏰ Monthly Clock: Updating active monthly savings groups...');
+        try {
+            await Group.updateMany(
+                {
+                    cycleType: { $regex: /^monthly$/i },
+                    status: 'active'
+                },
+                {
+                    $inc: { currentCycleProgress: 1 }
+                }
+            );
+            console.log('✅ Success: Updated monthly groups.');
+            await checkAndCloseCompletedGroups();
+        } catch (error) {
+            console.error('❌ Error running monthly cron job:', error);
+        }
+    });
 };
 
 // Helper function to turn off groups that have finished their lifecycle

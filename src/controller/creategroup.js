@@ -76,6 +76,16 @@ exports.createGroup = async (req, res) => {
       currentProgress = `Month 1 of ${cycleDuration}`;
     }
 
+    // ── Step 6.5: Assign rotation position to each contributor ──────────────
+    // Position = order they were added in (1st contributor added = position 1,
+    // 2nd = position 2, etc.). This becomes the fixed payout queue order.
+    // Alajo can change this later via the manual reorder feature — this is
+    // just the starting order.
+    const contributorsWithPosition = (contributors || []).map((c, index) => ({
+      ...c,
+      position: index + 1,
+    }));
+
     // ── Step 7: Create the group in database ───────────────────────────────
     const newGroup = await Group.create({
       name: name.trim(),
@@ -89,7 +99,7 @@ exports.createGroup = async (req, res) => {
       commissionAmount: Number(commissionAmount || 0),
       totalCollected: 0, // Nothing collected yet
       alajo: alajoId, // The Alajo who created this group
-      contributors: contributors || [], // Use provided contributors or empty array
+      contributors: contributorsWithPosition, // Now includes rotation position
       status: "active",
     });
 
@@ -265,4 +275,3 @@ exports.getContributors = async (req, res) => {
     });
   }
 };
-

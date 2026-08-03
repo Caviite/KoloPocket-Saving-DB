@@ -78,6 +78,14 @@ const groupSchema = new mongoose.Schema(
           type: String,
           trim: true,
           default: null
+        },
+        // ── Rotation order ──────────────────────────────────────────────
+        // Fixed position in the payout queue. 1 = collects cycle 1, etc.
+        // Set automatically at group creation (order contributors were added).
+        // Can be changed later only via the manual reorder feature.
+        position: {
+          type: Number,
+          default: null
         }
       },
     ],

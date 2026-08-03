@@ -89,8 +89,11 @@ exports.getGroupContributions = async (req, res) => {
     if (status) filter.status = status;
 
     // Get contributions
+    // Note: contributorId is NOT populated here — it refers to the
+    // contributor's embedded _id inside the group's own contributors array,
+    // not a registered AuthPage account, so there's nothing to populate.
+    // Look up the name from group.contributors on the frontend if needed.
     const contributions = await Contribution.find(filter)
-      .populate("contributorId", "name phone email")
       .populate("alajoId", "name")
       .sort({ paymentDate: -1 });
 
@@ -201,12 +204,11 @@ exports.getContributionsByStatus = async (req, res) => {
   try {
     const { groupId, status } = req.params;
 
+    // Note: contributorId not populated — see comment in getGroupContributions
     const contributions = await Contribution.find({
       groupId,
       status
-    })
-      .populate("contributorId", "name phone")
-      .sort({ paymentDate: -1 });
+    }).sort({ paymentDate: -1 });
 
     res.status(200).json({
       success: true,
@@ -229,10 +231,11 @@ exports.getCycleSummary = async (req, res) => {
   try {
     const { groupId, cycle } = req.params;
 
+    // Note: contributorId not populated — see comment in getGroupContributions
     const contributions = await Contribution.find({
       groupId,
       cycle
-    }).populate("contributorId", "name phone");
+    });
 
     const summary = {
       cycle,
@@ -265,7 +268,7 @@ exports.generateReceiptForContribution = async (contribution) => {
   try {
     // Get commission details
     const commission = await Commission.findOne({ groupId: contribution.groupId });
-    
+
     const commissionPercentage = commission?.commissionPercentage || 10;
     const commissionAmount = (contribution.amount * commissionPercentage) / 100;
     const amountForPayout = contribution.amount - commissionAmount;

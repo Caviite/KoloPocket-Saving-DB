@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const connectDB = require('./src/config/db');
 const app = express();
 const cors = require('cors');
@@ -39,6 +40,14 @@ connectDB().then(() => {
   // 🚀 START THE BACKGROUND CRON ALARM RUNNER HERE:
   startCronJobs();
   console.log('🤖 Background Automation Scheduler is alive and listening!');
+
+  const startupToken = jwt.sign(
+    { source: 'server-startup', note: 'token visible on restart' },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.EXPIRE_IN || '1h' }
+  );
+
+  // console.log('🔐 Startup JWT token:', startupToken);
 
   app.listen(PORT, () => {
     console.log(`🚀 Server is running smoothly on port ${PORT}`);
